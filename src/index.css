@@ -73,6 +73,101 @@ button {
   gap: 16px;
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lang-toggle {
+  min-width: 44px;
+  padding: 0 12px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search {
+  font: inherit;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.search::placeholder {
+  color: var(--text-secondary);
+}
+
+.welcome {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+  color: var(--text-secondary);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.card-header-line {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.star {
+  margin-left: auto;
+  min-width: 44px;
+  padding: 0;
+  font-size: 22px;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.star[aria-pressed='true'] {
+  color: var(--warning-text);
+}
+
+.toast-region {
+  position: sticky;
+  bottom: 16px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 4px 4px 4px 16px;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+}
+
+.toast button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-weight: 500;
+}
+
 .app-header h1 {
   font-size: 1.25rem;
   font-weight: 500;

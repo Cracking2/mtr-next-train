@@ -50,6 +50,25 @@ export function getStation(code: string): Station | undefined {
   return s && { code, tc: s.tc, en: s.en, lines: s.lines.filter(isLineCode) }
 }
 
+const ALL_STATIONS: Station[] = Object.keys(stationData.stations).map((code) => getStation(code)!)
+
+// Ranks code matches first, then name prefixes, then names that merely contain the query.
+export function searchStations(query: string): Station[] {
+  const q = query.trim().toLowerCase().replace(/\s+/g, '')
+  if (!q) return []
+  const score = (s: Station) => {
+    const en = s.en.toLowerCase().replace(/\s+/g, '')
+    if (s.code.toLowerCase() === q) return 0
+    if (s.tc.startsWith(q) || en.startsWith(q)) return 1
+    if (s.tc.includes(q) || en.includes(q)) return 2
+    return -1
+  }
+  return ALL_STATIONS.map((s) => ({ s, rank: score(s) }))
+    .filter(({ rank }) => rank >= 0)
+    .sort((a, b) => a.rank - b.rank || a.s.en.localeCompare(b.s.en))
+    .map(({ s }) => s)
+}
+
 export function getLineStations(code: LineCode): { stations: string[]; branches: Branch[] } {
   return stationData.lines[code]
 }
