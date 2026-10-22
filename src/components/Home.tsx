@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { getLine, getStation, searchStations } from '../data/lines'
 import { useFavourites } from '../favourites'
 import { useLang } from '../i18n'
 import { href } from '../router'
 import { LineBadge } from './LineBadge'
 import { LineList } from './LineList'
+import { NearestStations } from './NearestStations'
 import { StationCard } from './StationCard'
 
 function SearchResults({ query }: { query: string }) {
@@ -59,9 +60,12 @@ function Favourites() {
 export function Home() {
   const { t } = useLang()
   const [query, setQuery] = useState('')
+  const searchRef = useRef<HTMLInputElement>(null)
+  const linesRef = useRef<HTMLDivElement>(null)
   return (
     <div className="stack">
       <input
+        ref={searchRef}
         className="search"
         type="search"
         value={query}
@@ -75,7 +79,13 @@ export function Home() {
       ) : (
         <>
           <Favourites />
-          <LineList />
+          <NearestStations
+            onSearch={() => searchRef.current?.focus()}
+            onBrowse={() => linesRef.current?.scrollIntoView({ behavior: 'smooth' })}
+          />
+          <div ref={linesRef}>
+            <LineList />
+          </div>
         </>
       )}
     </div>

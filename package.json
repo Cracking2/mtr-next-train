@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "data": "node scripts/build-stations.mjs"
+    "data": "node scripts/build-stations.mjs",
+    "coords": "node scripts/build-coords.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.5",

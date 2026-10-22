@@ -37,9 +37,31 @@ const messages = {
   maybeStale: { zh: '，班次可能已過時', en: ', times may be out of date' },
   loading: { zh: '載入班次中', en: 'Loading trains' },
   footer: {
-    zh: '資料來源：DATA.GOV.HK · 本 App 與港鐵公司無關',
-    en: 'Data: DATA.GOV.HK · Not affiliated with MTR Corporation',
+    zh: '資料來源：DATA.GOV.HK · 車站位置 © OpenStreetMap 貢獻者 · 本 App 與港鐵公司無關',
+    en: 'Data: DATA.GOV.HK · Station locations © OpenStreetMap contributors · Not affiliated with MTR Corporation',
   },
+  locate: { zh: '定位最近車站', en: 'Find nearest stations' },
+  locating: { zh: '定位中…', en: 'Finding your location…' },
+  locatePrivacy: {
+    zh: '位置只在你的裝置上計算，不會傳送出去。',
+    en: 'Your location is used on this device only and is never sent anywhere.',
+  },
+  nearest: { zh: '最近車站', en: 'Nearest stations' },
+  straightLine: { zh: '直線距離', en: 'Straight-line distance' },
+  locationDenied: {
+    zh: '未能取得位置。你可以用搜尋或按路綫瀏覽。',
+    en: "Couldn't get your location. You can search or browse by line instead.",
+  },
+  locationUnavailable: {
+    zh: '暫時未能定位。請稍後再試，或用搜尋。',
+    en: "Couldn't find your location right now. Try again later, or search instead.",
+  },
+  outsideHk: {
+    zh: '你似乎不在香港，附近沒有港鐵站。',
+    en: "You don't seem to be in Hong Kong, so there are no MTR stations nearby.",
+  },
+  searchInstead: { zh: '搜尋車站', en: 'Search stations' },
+  tryAgain: { zh: '再試一次', en: 'Try again' },
 } satisfies Record<string, Record<Lang, string>>
 
 export type MessageKey = keyof typeof messages
@@ -56,6 +78,10 @@ const formats = {
     zh: `找不到「${q}」。試試英文名或車站代號。`,
     en: `No station matches "${q}". Try the Chinese name or station code.`,
   }),
+  distance: (metres: number) =>
+    metres < 1000
+      ? { zh: `${Math.round(metres / 10) * 10} 米`, en: `${Math.round(metres / 10) * 10} m` }
+      : { zh: `${(metres / 1000).toFixed(1)} 公里`, en: `${(metres / 1000).toFixed(1)} km` },
   stationNotFound: (code: string) => ({ zh: `找不到車站「${code}」。`, en: `Station "${code}" not found.` }),
 }
 

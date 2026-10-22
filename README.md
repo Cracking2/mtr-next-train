@@ -10,6 +10,7 @@ npm run dev
 ```
 
 - `npm run data` 由港鐵開放數據重新產生 `src/data/stations.json`
+- `npm run coords` 由 OpenStreetMap 重新產生車站座標 `src/data/coords.json`（© OpenStreetMap 貢獻者，ODbL）
 - `npm run build` 進行型別檢查及建置
 
 產品範圍見 [docs/product-brief.md](docs/product-brief.md)，設計見 [docs/ui-ux-plan.md](docs/ui-ux-plan.md)。
