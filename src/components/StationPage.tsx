@@ -45,13 +45,12 @@ export function StationPage({ code, line }: { code: string; line?: LineCode }) {
         </button>
       </div>
       {station.lines.length > 1 && (
-        <nav className="tabs" role="tablist" aria-label={t('lines')}>
+        <nav className="tabs" aria-label={t('lines')}>
           {station.lines.map((l) => (
             <a
               key={l}
               className="tab"
-              role="tab"
-              aria-selected={l === selected}
+              aria-current={l === selected ? 'page' : undefined}
               href={href.station(code, l)}
               style={{ '--line': getLine(l).color } as CSSProperties}
             >

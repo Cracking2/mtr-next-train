@@ -55,7 +55,7 @@ type Props = {
 }
 
 export function StationCard({ line, station, limit = 4, header }: Props) {
-  const { t, f } = useLang()
+  const { t, f, name } = useLang()
   const query = useQuery({
     queryKey: ['schedule', line, station],
     queryFn: ({ signal }) => fetchSchedule(line, station, signal),
@@ -94,6 +94,16 @@ export function StationCard({ line, station, limit = 4, header }: Props) {
   const ageSeconds = Math.max(0, Math.round((now - query.dataUpdatedAt) / 1000))
   const stale = query.isError || now - query.dataUpdatedAt > STALE_AFTER_MS
   const hasTrains = [...up, ...down].some((tr) => tr.arrival.getTime() > now - DEPARTED_GRACE_MS)
+  // Screen readers hear only each direction's first train, and only when its minute changes.
+  const firstTrains = [up, down]
+    .map((trains) => trains.find((tr) => tr.arrival.getTime() > now - DEPARTED_GRACE_MS))
+    .filter((tr) => tr !== undefined)
+    .map((tr) => {
+      const minutes = Math.floor((tr.arrival.getTime() - now) / 60_000)
+      const dest = getStation(tr.dest)
+      return `${dest ? name(dest) : tr.dest} ${minutes < 1 ? t('arriving') : f('minutes', minutes)}`
+    })
+    .join('；')
 
   return (
     <div className="card" style={style}>
@@ -111,6 +121,9 @@ export function StationCard({ line, station, limit = 4, header }: Props) {
       ) : (
         <p className="muted">{t('noTrains')}</p>
       )}
+      <p className="sr-only" aria-live="polite">
+        {firstTrains}
+      </p>
       <div className={stale ? 'updated stale' : 'updated'}>
         <span>
           {ageSeconds < 5 ? t('justUpdated') : f('updatedAgo', ageSeconds)}
