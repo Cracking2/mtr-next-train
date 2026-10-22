@@ -9,7 +9,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "data": "node scripts/build-stations.mjs",
-    "coords": "node scripts/build-coords.mjs"
+    "coords": "node scripts/build-coords.mjs",
+    "screenshots": "node scripts/screenshots.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.5",
